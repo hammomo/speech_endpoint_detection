@@ -7,8 +7,7 @@ run PART_I
 pos = get(gcf,'Position');              % 作图
 set(gcf,'Position',[pos(1), pos(2)-100,pos(3),(pos(4)-200)]);
 plot(time,x,'k'); 
-title_str = ['信噪比为', num2str(SNR),'dB的端点检测'];
-title(title_str);
+title('失败的自录语音端点检测');
 ylabel('幅值'); axis([0 max(time) -1 1]); grid;
 xlabel('时间/s');
 run PART_II

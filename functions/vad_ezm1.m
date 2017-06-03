@@ -6,26 +6,26 @@ status  = 0;
 count   = 0;
 silence = 0;
 
-% y=enframe(x,wlen,inc)';                 % 分帧
-% fn=size(y,2);                           % 帧数
-% amp=sum(y.^2);                          % 求取短时平均能量
-% zcr=zc2(y,fn);                          % 计算短时平均过零率
-% ampth=mean(amp(1:NIS));                 % 计算初始无话段区间能量和过零率的平均值               
-% zcrth=mean(zcr(1:NIS));
-% amp2=2*ampth; amp1=4*ampth;             % 设置能量和过零率的阈值
-% zcr2=2*zcrth;
-
-%计算短时能量
 y=enframe(x,wlen,inc)';                 % 分帧
 fn=size(y,2);                           % 帧数
 amp=sum(y.^2);                          % 求取短时平均能量
-zcr=zc2(y,fn);                          % 计算短时平均过零  
-ampm = multimidfilter(amp,5);           % 中值滤波平滑处理
-zcrm = multimidfilter(zcr,5);         
-ampth=mean(ampm(1:NIS));                % 计算初始无话段区间能量和过零率的平均值 
-zcrth=mean(zcrm(1:NIS));
-amp2=1.2*ampth; amp1=1.5*ampth;         % 设置能量和过零率的阈值
+zcr=zc2(y,fn);                          % 计算短时平均过零率
+ampth=mean(amp(1:NIS));                 % 计算初始无话段区间能量和过零率的平均值               
+zcrth=mean(zcr(1:NIS));
+amp2=2*ampth; amp1=4*ampth;             % 设置能量和过零率的阈值
 zcr2=0.8*zcrth;
+
+% %计算短时能量
+% y=enframe(x,wlen,inc)';                 % 分帧
+% fn=size(y,2);                           % 帧数
+% amp=sum(y.^2);                          % 求取短时平均能量
+% zcr=zc2(y,fn);                          % 计算短时平均过零  
+% ampm = multimidfilter(amp,5);           % 中值滤波平滑处理
+% zcrm = multimidfilter(zcr,5);         
+% ampth=mean(ampm(1:NIS));                % 计算初始无话段区间能量和过零率的平均值 
+% zcrth=mean(zcrm(1:NIS));
+% amp2=1.2*ampth; amp1=1.5*ampth;         % 设置能量和过零率的阈值
+% zcr2=0.8*zcrth;
 
 %开始端点检测
 xn=1;

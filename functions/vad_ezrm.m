@@ -15,8 +15,8 @@ ampm = multimidfilter(amp,5);           % 中值滤波平滑处理
 zcrm = multimidfilter(zcr,5);         
 ampth=mean(ampm(1:NIS));                % 计算初始无话段区间能量和过零率的平均值 
 zcrth=mean(zcrm(1:NIS));
-amp2=0.8*ampth; amp1=1.0*ampth;         % 设置能量和过零率的阈值
-zcr2=0.2*zcrth;
+amp2=1.2*ampth; amp1=1.5*ampth;         % 设置能量和过零率的阈值
+zcr2=0.8*zcrth;
 
 %开始端点检测
 xn=1;
@@ -29,7 +29,7 @@ for n=1:fn
          silence(xn) = 0;
          count(xn)   = count(xn) + 1;
       elseif amp(n) > amp2 | ...        % 可能处于语音段
-             zcr(n) > zcr2
+             zcr(n) < zcr2
          status = 1;
          count(xn)  = count(xn) + 1;
       else                              % 静音状态
@@ -40,7 +40,7 @@ for n=1:fn
       end
    case 2,                              % 2 = 语音段
       if amp(n) > amp2 | ...            % 保持在语音段
-         zcr(n) > zcr2
+         zcr(n) < zcr2
          count(xn) = count(xn) + 1;
       else                              % 语音将结束
          silence(xn) = silence(xn)+1;
@@ -63,7 +63,7 @@ for n=1:fn
         x1(xn)=0;
         x2(xn)=0;
    end
-    fprintf('%4d   \n',status);
+%     fprintf('%4d   \n',status);
 end   
 
 el=length(x1);             
